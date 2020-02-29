@@ -2,15 +2,12 @@ class Owner
  
   @@all=[]
   
-  attr_reader   :name,:species 
-  attr_accessor :dogs, :cats 
-  
+  attr_reader :name,:species 
+
   def initialize(name,species ="human")
     @name=name
     @species = species
     @@all << self 
-    @dogs=[]
-    @cats=[]
   end 
   
    
@@ -39,15 +36,12 @@ class Owner
   end 
   
   def buy_cat(name) 
-    cat = Cat.new(name,self)
-     @cats << cat
-   
+     @@all << cat = Cat.new(name,self)
   end 
 
   def buy_dog(name)
-    dog = Dog.new(name,self)
-     @dogs << dog
-    end 
+     @@all << dog = Dog.new(name,self)
+  end 
 
    def walk_dogs
     Dog.all.each do |dog|
@@ -63,24 +57,16 @@ end
  
   def sell_pets
    
-  Cat.all.drop_while do |cat|
-    
-   (cat.owner=nil)||(cat.mood="nervous") 
+     Cat.all.drop_while{|cat|
+     (cat.owner=nil)||(cat.mood="nervous") }
   
-  end 
   
-  Dog.all.drop_while do |dog|
-    
-    (dog.owner=nil)||(dog.mood="nervous")
+     Dog.all.drop_while{|dog|
+     (dog.owner=nil)||(dog.mood="nervous")}
   
-    end 
-    
 	end 
   
- 
  def list_pets
      "I have #{dogs.length} dog(s), and #{cats.length} cat(s)."
-     #"I have #{Dog.all.length} dog(s), and #{Cat.all.length} cat(s)."
+ end
  end 
-
-end
